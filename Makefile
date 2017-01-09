@@ -1,7 +1,7 @@
 FSW_VRT	= vorticity.x
 
 #List of sources
-C_FSW_VRT	= main.c new.c prep.c func.c
+C_FSW_VRT	= main.c new.c prep.c func.c operators.c output.c
 
 # Compilers
 CC      = gcc

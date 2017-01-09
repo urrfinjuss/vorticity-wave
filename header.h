@@ -10,8 +10,9 @@
 #define INF_DEPTH 0
 
 typedef struct params {
-	long double c, v, HL, curv, gb0, ml;
-	long double L, L_res, D;
+	long double  HL, curv, ml;
+	long double c, v, g, k0, D;
+	long double L, L_res;
 	long double vc, max_angle;
 	long int N;
 	FILE *fh;
@@ -27,16 +28,27 @@ typedef struct linear_solver_output {
 	long double kappa;	// stores condition number of A
 } linsol, *linsol_ptr;
 
+
+// global variables
+extern long int nC, nS, N;
+extern long double overN;
+extern long double Tau, Ksi, Sigma;
+extern long double *x, *y, *dUq;
+extern long double *xk, *yk;
+extern long double *tk, *H;
+extern long double Beta, dBeta;
+
+// global functions
 extern int read_guess(params_ptr in);
 extern int init_arrays(params_ptr in);
 extern int simulate(params_ptr in);
-
 extern long double dot_cosine(long double *in1, long double *in2);
 extern long double dot(long double *in1, long double *in2);
 
 extern void write_FT(char *name, long double *in);
 extern void write_FTR(char *name, params_ptr in);
 extern void write_PHE(char *name, long double L, long double *in);
+extern void write_xy(char *name, params_ptr in);
 extern void fourier_reinterp(long double L1, long double L2);
 extern void operator_L0(long double *ink, long double *pk);
 extern void operator_L1(long double *ink, long double *outk);
@@ -55,9 +67,9 @@ extern void symortho(long double a, long double b, long double *c, long double *
 extern void lanczos_step(long double *v, long double *vp, long double bk, long double sigma, long double *alpha_k, long double *beta_k, long double *vn);
 
 extern void writer_full(char* str, long double *x, long double *yk, long double *y, long int N);
-
-// verification
-extern void operator_L1_verify(long double *ink, long double *outk);
-
+extern void allocate_global_memory(params_ptr in);
+extern void allocate_memory();
+extern void dft(long double *in, long double *out);
+extern void dft_sine(long double *in, long double *out);
 
 
